@@ -1,0 +1,206 @@
+:root{
+    --occupy:25%;
+    --backCol:lightblue;
+}
+
+.Header{
+    height:180px;
+    width:98%;
+    position:fixed;
+    float: left;
+    background-color:gray;
+}
+
+.HeaderButtons{
+    position: absolute;
+    bottom: 0;
+}
+
+button{
+    height:25px;
+    width:125px;
+    border:1px solid gray;
+    background-color:lightgray;
+}
+.pageBody{
+    width:100%;
+    height:auto;
+    clear: both;
+    position: relative;
+    top:190px;
+}
+
+table{
+    width:99%;
+    margin:0;
+    border:1px solid black;
+    border-collapse: collapse;
+}
+
+th{
+    width:1%;
+    border:1px solid black;
+    border-collapse: collapse;
+    justify-content: center;
+    text-align: center;
+    text-decoration: underline;
+}
+
+td{
+    width:1%;
+    border:1px solid black;
+    border-collapse: collapse;
+    justify-content: center;
+    text-align: left;
+}
+
+.display-block{
+    display: block;
+}
+
+.display-none{
+    display: none;
+}
+
+.close_modal{
+    float: right;
+}
+
+.sample_modal{
+    background-color: blue;
+    top:100px;
+    bottom: 100px;
+    left: 20px;
+    right: 20px;
+    position:fixed;
+    opacity: 1;
+    border:2px solid white;
+    border-radius: 5px;
+}
+
+.show-overlay{
+    display:block;
+    opacity: 1.1;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position:fixed;
+}
+
+.hide-overlay{
+    display:none;
+}
+
+.modal_header{
+    background-color: red;
+    justify-content: center;
+    padding-top: 10px;
+    height:5%;
+}
+
+.modal_body{
+    height:55%;
+}
+
+.simple_modal_body{
+    height:92%;
+    width:100%;
+    overflow-y: hidden;
+}
+
+.modal_end{
+    position: absolute;
+    width:100%;
+    height:40%;
+}
+
+.message_text{
+    color:black;
+    position: absolute;
+    width:100%;
+    height:10%;
+}
+
+#message{
+    background-color: red;
+    position: absolute;
+    left:170px;
+    top:20px;
+}
+
+
+#user_input_data{
+    clear: both;
+    width:100%;
+    position: absolute;
+    top:95px;
+    height:25%;
+}
+
+#cancel-save-btns{
+    clear: both;
+    width:100%;
+    position: absolute;
+    top:100px;
+    height:10%;
+}
+.modal_btns{
+    float:right;
+    padding-left: 20px;
+    padding-right: 50px;
+    padding-top: 20px;
+}
+
+.input_data{
+    position: absolute;
+    padding-top: 25px;
+    padding-left: 160px;
+    padding-right: 160px;
+}
+
+.label_cell{
+    padding-right: 10px;
+    padding-left: 10px;
+    color:white
+}
+
+input[type="text"]{
+    border-radius: 5px;
+    height:25px;
+    width:250px;
+}
+
+
+.MuiTableCell-head{
+    width:fit-content;
+    border-collapse: collapse;
+    border: none;
+}
+
+.MuiButtonBase-root.MuiTableSortLabel-root{
+    border:1px solid black;
+    text-align:"center";
+    vertical-align:"middle"
+}
+
+#table_data_records{
+    overflow-y: hidden;
+    scrollbar-width: auto;
+    height: 400px;
+}
+
+#players_table_records{
+    display: block;
+    overflow-y: hidden;
+    height:400px
+}
+#no_table_records,#records_found{
+    display:none
+}
+
+#no_records_message{
+    display: block;
+    width: 100%;
+    height: 50px;
+}
