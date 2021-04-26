@@ -17,6 +17,35 @@
     bottom: 0;
 }
 
+.header_text{
+    overflow: hidden;
+    height: 100px;
+    position: absolute;
+}
+
+.header_text{
+    position: absolute;
+    overflow: hidden;
+    height: 145px;
+    width: 100%;
+    text-align: center;
+}
+
+.header_scroll{
+    overflow: hidden;
+    height: 140px;
+    display: inline-block;
+    animation: scroll_text 5s linear  2s infinite forwards;
+}
+
+.header_scroll:hover{
+    animation-play-state: paused;
+}
+
+@keyframes scroll_text {
+    to{transform: translateY(100%);}
+}
+
 button{
     height:25px;
     width:125px;
@@ -45,7 +74,7 @@ button{
 }
 
 .sample_modal{
-    background-color: blue;
+    background-color:blue;
     top:100px;
     bottom: 100px;
     left: 20px;
@@ -147,6 +176,7 @@ input[type="text"]{
     border-radius: 5px;
     height:25px;
     width:250px;
+    color:black;
 }
 
 
@@ -171,7 +201,7 @@ input[type="text"]{
 #players_table_records{
     display: block;
     overflow-y: hidden;
-    height:400px
+    height:350px
 }
 #no_table_records,#records_found{
     display:none
@@ -192,5 +222,21 @@ input[type="text"]{
 
 .edit_div{
     width: 100%;
-    height: 125px;
+    height: auto;
+    position: relative;
+}
+
+.display-subtitle{
+    display: block;
+}
+
+.no-subtitle{
+    display: none;
+}
+
+#container{
+    width: 100px;
+    height: 150px;
+    position: relative;
+    left:5%;
 }
