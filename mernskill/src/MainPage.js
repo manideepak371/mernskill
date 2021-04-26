@@ -1,7 +1,9 @@
 import React from 'react';
-import './GA.css';
+import './api/GA.css';
 import {AddMember,EditMember,PlayerTable} from './features'
 import {Log} from './changelog'
+import Switch from '@material-ui/core/Switch'
+import { MenuList } from '@material-ui/core';
 
 export class Page extends React.Component{
     constructor(){
@@ -13,7 +15,8 @@ export class Page extends React.Component{
             tableUpdate:false,
             EditMemshow:false,
             LogShow:false,
-            logdata:[]
+            logdata:[],
+            adminflag:false
         }
         this.TableUpdateNo=this.TableUpdateNo.bind(this)
         this.TableUpdateYes=this.TableUpdateYes.bind(this)
@@ -28,6 +31,12 @@ export class Page extends React.Component{
             }
         },1000)
     }
+
+    playershead=[
+        {id:"name",name:"Name"},
+        {id:"country",name:"Country"},
+        {id:"club",name:"Club"}
+    ]
 
     async GetLogData(){
         const res=await fetch("http://localhost:9000/player/GetLog",{
@@ -100,26 +109,44 @@ export class Page extends React.Component{
         })
     }
 
-    render(){  
+    switchChange=()=>{
+        var flag=this.state.adminflag? !this.state.adminflag:!this.state.adminflag;
+        this.setState({adminflag:flag})
+    }
+
+    pagefeatures=[
+        {text:"Add a player (If user is a admin)"},
+        {text:"Edit a player (If user is a admin)"},
+        {text:"Change Log"},
+        {text:"Export players data to excel and pdf"},
+    ]
+
+    render(){ 
         return(
             <React.Fragment>
                 <div className="main_div">
                     <div id="page-top" className="Header">
+                        <div className="header_text">
+                            <div className="header_scroll">
+                                {this.pagefeatures.map(d=>(
+                                    <p><span><label style={{color:"white"}}>{d.text}</label></span></p>
+                                ))}
+                            </div>
+                        </div>
                         <div className="HeaderButtons">
                             <button>Home</button>
-                            <button>To Excel</button>
-                            <button onClick={()=>{this.setState({AddMemshow:true})}}>Add Player</button>
+                            <button onClick={()=>{this.setState({AddMemshow:true})}} disabled={!this.state.adminflag}>Add Player</button>
                             <button onClick={this.showChangeLog}>Change Log</button>
+                            <Switch color="gray" onChange={()=>{this.switchChange()}}/><label>Admin</label>
                         </div>
                         <div id="page-middle" className="pageBody">
                             <div id="players_container">
-                                {this.state.tableUpdate && <PlayerTable PlayersData={this.state.postData}/>}    
+                                {this.state.tableUpdate && <PlayerTable PlayersData={this.state.postData} admin={this.state.adminflag}/>}    
                             </div> 
                         </div>
                     </div>
                     {this.state.AddMemshow && <AddMember show={this.state.AddMemshow} hide={this.hideAddModal} tbupdateyes={this.TableUpdateYes} tbupdateno={this.TableUpdateNo} LogUpdate={this.UpdateLogData}/>}
-                    {this.state.LogShow && <Log show={this.state.LogShow} hide={this.hideChangeLog} LogData={this.state.logdata} /> }
-                     
+                    {this.state.LogShow && <Log show={this.state.LogShow} hide={this.hideChangeLog}/> }
                 </div>  
             </React.Fragment> 
         );
@@ -128,3 +155,7 @@ export class Page extends React.Component{
 
 export default Page
                     
+/*export options
+1. react-html-table-to-excel
+2. react-csv
+*/

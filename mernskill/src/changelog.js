@@ -1,5 +1,5 @@
 import React from 'react'
-import {SimpleModal} from './modal'
+import {SimpleModal} from './api/modal'
 import {Table,TableHead,TableRow,TableCell,TableSortLabel, TableBody} from '@material-ui/core'
 
 
@@ -128,14 +128,39 @@ export class Log extends React.Component{
     constructor(props){
         super()
         this.state={
-            LogData:props.LogData
+            log:false,
+            updatedlogdata:[]
         }
     }
-    render(){
-        const ele=<LogTable Data={this.state.LogData}/>
 
+    componentDidMount(){
+        this.GetLogData()
+    }
+
+    async GetLogData(){
+        const res=await fetch("http://localhost:9000/player/GetLog",{
+                mode:"cors",
+                method:"GET",
+                headers:{'Content-Type':'application/json'}
+            })
+        const responseData=await res.json()
+        this.setState({
+            updatedlogdata:responseData
+        })
+        return null
+    }
+
+    render(){
+        const ele=<LogTable Data={this.state.updatedlogdata}/>
+        setTimeout(()=>{
+            this.setState({
+                log:true
+            })
+        },100)
         return(
-            <SimpleModal show={this.props.show} hide={this.props.hide} modal_body_append={ele} title="Change Log"/>
+            <React.Fragment>
+              {this.state.log && <SimpleModal show={this.props.show} hide={this.props.hide} modal_body_append={ele} title="Change Log"/>}  
+            </React.Fragment>
         )
     }
 
