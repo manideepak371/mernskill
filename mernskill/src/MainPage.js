@@ -1,9 +1,8 @@
 import React from 'react';
-import './api/GA.css';
-import {AddMember,EditMember,PlayerTable} from './features'
+import '../src/GA.css';
+import {AddMember,PlayerTable,LoadPlayers} from './features'
 import {Log} from './changelog'
 import Switch from '@material-ui/core/Switch'
-import { MenuList } from '@material-ui/core';
 
 export class Page extends React.Component{
     constructor(){
@@ -16,7 +15,9 @@ export class Page extends React.Component{
             EditMemshow:false,
             LogShow:false,
             logdata:[],
-            adminflag:false
+            adminflag:false,
+            excel_xml:false,
+            uploadfile:false
         }
         this.TableUpdateNo=this.TableUpdateNo.bind(this)
         this.TableUpdateYes=this.TableUpdateYes.bind(this)
@@ -29,7 +30,7 @@ export class Page extends React.Component{
             if(this.state.postData.length !== 0){
                 this.TableUpdateYes(this.state.postData)
             }
-        },1000)
+        },2000)
     }
 
     playershead=[
@@ -40,7 +41,6 @@ export class Page extends React.Component{
 
     async GetLogData(){
         const res=await fetch("http://localhost:9000/player/GetLog",{
-                mode:"cors",
                 method:"GET",
                 headers:{'Content-Type':'application/json'}
             })
@@ -53,7 +53,6 @@ export class Page extends React.Component{
 
     async GetAllPlayersData(){
         const response=await fetch("http://localhost:9000/player/getPlayers",{
-            mode:"cors",
             method:"GET",
             headers:{'Content-Type':'application/json'}
         });
@@ -121,6 +120,16 @@ export class Page extends React.Component{
         {text:"Export players data to excel and pdf"},
     ]
 
+    excelXMLhide=()=>{
+        this.setState({excel_xml:false})
+    }
+
+    UploadFile=()=>{
+        this.setState({
+            uploadfile:true
+        })
+    }
+
     render(){ 
         return(
             <React.Fragment>
@@ -134,9 +143,9 @@ export class Page extends React.Component{
                             </div>
                         </div>
                         <div className="HeaderButtons">
-                            <button>Home</button>
                             <button onClick={()=>{this.setState({AddMemshow:true})}} disabled={!this.state.adminflag}>Add Player</button>
                             <button onClick={this.showChangeLog}>Change Log</button>
+                            <button onClick={()=>{this.setState({excel_xml:true})}} disabled={!this.state.adminflag}>Load players from Excel or XML</button>
                             <Switch color="gray" onChange={()=>{this.switchChange()}}/><label>Admin</label>
                         </div>
                         <div id="page-middle" className="pageBody">
@@ -147,6 +156,7 @@ export class Page extends React.Component{
                     </div>
                     {this.state.AddMemshow && <AddMember show={this.state.AddMemshow} hide={this.hideAddModal} tbupdateyes={this.TableUpdateYes} tbupdateno={this.TableUpdateNo} LogUpdate={this.UpdateLogData}/>}
                     {this.state.LogShow && <Log show={this.state.LogShow} hide={this.hideChangeLog}/> }
+                    {this.state.excel_xml && <LoadPlayers show={this.state.excel_xml} hide={this.excelXMLhide} existingdata={this.state.postData} tbupdateyes={this.TableUpdateYes} tbupdateno={this.TableUpdateNo} LogUpdate={this.UpdateLogData}/>}
                 </div>  
             </React.Fragment> 
         );

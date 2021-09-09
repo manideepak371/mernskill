@@ -1,7 +1,7 @@
 import React from 'react'
 import {SimpleModal} from './api/modal'
 import {Table,TableHead,TableRow,TableCell,TableSortLabel, TableBody} from '@material-ui/core'
-
+import '../src/GA.css'
 
 const datahead=[
     {id:"Action",type:"string",name:"Action"},
@@ -68,7 +68,6 @@ function LogTableHead(props){
                         />
                     </TableCell> 
                 ))}
-                <TableCell style={lastcellwidth}></TableCell>
             </TableRow>
         </TableHead>
     )
@@ -91,20 +90,31 @@ function LogTable({Data}){
             }
         } 
     }
+    const SortReqHandler=(property)=>{
+        SortHandler(property)
+    }
     const scrollset= (datacopy.length>7) ? {overflowY:"scroll"} : {overflowY:"hidden"}
-    const lastcolwidth=(datacopy.length>7) ? {width:"2%"} : {width:"0%"}
     return(
         <div>
-            <Table style={{tableLayout:"fixed"}}>
-                <LogTableHead
-                    order={order}
-                    orderby={orderby}
-                    onSortRequest={SortHandler}
-                    lastcellwidth={lastcolwidth}
-                />
-            </Table>
             <div id="table_data_records" style={scrollset}>
                 <Table style={{tableLayout:"fixed",backgroundColor:"lemonchiffon"}}>
+                        <TableHead style={{backgroundColor:'white'}}>
+                            <TableRow style={{border:"1px solid black",width:"100%"}}>
+                                {datahead.map((cell)=>(
+                                    <TableCell 
+                                    style={{border:"1px solid black",width:"30%",textAlign:"center",alignItems:"center"}} 
+                                    key={cell.id}>
+                                        {cell.name}
+                                        <TableSortLabel 
+                                            active={orderby===cell.id}
+                                            direction={orderby===cell.id?order:'asc'}
+                                            onClick={()=>SortReqHandler(cell.id)}
+                                            style={{border:"none",borderCollapse:"collapse"}}
+                                        />
+                                    </TableCell> 
+                                ))}
+                            </TableRow>
+                        </TableHead>
                         <TableBody>
                         {sortData(datacopy,datacompare(order,orderby)).map((cell)=>{
                             return(
@@ -139,7 +149,6 @@ export class Log extends React.Component{
 
     async GetLogData(){
         const res=await fetch("http://localhost:9000/player/GetLog",{
-                mode:"cors",
                 method:"GET",
                 headers:{'Content-Type':'application/json'}
             })
