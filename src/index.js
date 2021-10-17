@@ -5,7 +5,8 @@ import reportWebVitals from './reportWebVitals';
 //import {Childe} from './Append.js'
 
 ReactDOM.render(
-  <Page/>,
+  //<Page/>,
+  <p>Hello testing CL/CI</p>,
   document.getElementById('root')
 );
 
