@@ -9,4 +9,4 @@ pipelines:
   default:
         - step:
             script:
-              - git push https://heroku:d998e6ff-b040-405a-a255-5ce5547b3107@git.heroku.com/mernskill.git HEAD
+              - git push -f https://heroku:d998e6ff-b040-405a-a255-5ce5547b3107@git.heroku.com/mernskill.git HEAD
